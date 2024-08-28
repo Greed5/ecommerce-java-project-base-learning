@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="forms.Login">
+  <grid id="27dc6" binding="MainPanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="534" height="468"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="7b107" binding="MidPanel" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="40" left="130" bottom="40" right="130"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-2104859"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="95100" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Password"/>
+            </properties>
+          </component>
+          <component id="12b17" class="javax.swing.JTextField" binding="UsernameInput">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="50" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <margin top="2" left="9" bottom="2" right="6"/>
+            </properties>
+          </component>
+          <component id="b9dd4" class="javax.swing.JPasswordField" binding="PasswordInput">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="50" height="-1"/>
+              </grid>
+            </constraints>
+            <properties>
+              <margin top="2" left="5" bottom="2" right="5"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="f9ca8" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <alignmentX value="0.5"/>
+              <text value="Username"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="e9db8" binding="DownPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-2104859"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="10e36" class="javax.swing.JCheckBox" binding="rememberPasswordCheckBox" default-binding="true">
+            <constraints/>
+            <properties>
+              <background color="-2104859"/>
+              <text value="Remember Password"/>
+            </properties>
+          </component>
+          <component id="11c95" class="javax.swing.JButton" binding="LoingButton">
+            <constraints/>
+            <properties>
+              <text value="Login"/>
+            </properties>
+          </component>
+          <hspacer id="246e2">
+            <constraints/>
+          </hspacer>
+          <component id="b70d0" class="javax.swing.JButton" binding="RegisteredButton">
+            <constraints/>
+            <properties>
+              <text value="Registered"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="3c144" binding="HeadPanel" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-16763317"/>
+          <focusable value="false"/>
+          <foreground color="-1025"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="d5557" class="javax.swing.JLabel" binding="LbTitle">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <focusTraversalPolicyProvider value="false"/>
+              <font name="Berlin Sans FB Demi" size="20" style="1"/>
+              <foreground color="-1"/>
+              <text value="Accoun Login"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="e519" class="javax.swing.JLabel" binding="lblMsg">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
