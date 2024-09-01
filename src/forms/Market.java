@@ -5,8 +5,9 @@ import Database.DBconnection;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +24,7 @@ public class Market extends JDialog {
     private JButton cartOrderButton;
     private JButton accountButton;
     private JPanel MainPanel;
-    private JTextField SearchtextField1;
+    private JTextField SearchBox;
     private JButton addCartB;
 
     public Market(JFrame parent) {
@@ -51,13 +52,28 @@ public class Market extends JDialog {
         Product_Market.getColumnModel().getColumn(0).setCellEditor(new CheckBoxEditor());
 
         // Fetch data from the database and populate the JTable
-        loadProductData(tableModel);
+        loadProductData("");
 
         // Set up action listeners for buttons
         setupButtonListeners(parent);
 
-        // Refresh the table to ensure data is visible
-        tableModel.fireTableDataChanged();
+        // Add a document listener to the search box
+        SearchBox.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filterData();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                filterData();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filterData();
+            }
+        });
     }
 
     private void setupButtonListeners(JFrame parent) {
@@ -100,6 +116,11 @@ public class Market extends JDialog {
         });
     }
 
+    private void filterData() {
+        String searchText = SearchBox.getText();
+        loadProductData(searchText);
+    }
+
     private void handleAddToCart() {
         // Retrieve selected rows
         int rowCount = Product_Market.getRowCount();
@@ -125,15 +146,21 @@ public class Market extends JDialog {
         JOptionPane.showMessageDialog(this, "Products have been added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void loadProductData(DefaultTableModel tableModel) {
-        // SQL query to fetch data from the product table
+    private void loadProductData(String filter) {
+        // SQL query to fetch data from the product table with optional filtering
         String query = "SELECT product_name, detailed, P_price FROM product";
+
+        // Add filtering to the query if there's a filter text
+        if (filter != null && !filter.isEmpty()) {
+            query += " WHERE product_name LIKE '%" + filter + "%'";
+        }
 
         try (Connection conn = DBconnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             // Clear existing rows in the table model
+            DefaultTableModel tableModel = (DefaultTableModel) Product_Market.getModel();
             tableModel.setRowCount(0);
 
             // Iterate through the ResultSet to add rows to the table model
