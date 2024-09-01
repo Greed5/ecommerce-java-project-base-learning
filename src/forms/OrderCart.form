@@ -59,7 +59,7 @@
               <text value="card Num"/>
             </properties>
           </component>
-          <component id="75aea" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+          <component id="75aea" class="javax.swing.JTextField" binding="Cnum_f">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -75,7 +75,7 @@
               <text value="CVV"/>
             </properties>
           </component>
-          <component id="de0db" class="javax.swing.JTextField" binding="CvvtextField2">
+          <component id="de0db" class="javax.swing.JTextField" binding="Cvv_f">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -91,7 +91,7 @@
               <text value="email"/>
             </properties>
           </component>
-          <component id="caac3" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+          <component id="caac3" class="javax.swing.JTextField" binding="mail_f">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -99,7 +99,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="62fa4" class="javax.swing.JRadioButton" binding="clickHereToComfirmRadioButton" default-binding="true">
+          <component id="62fa4" class="javax.swing.JRadioButton" binding="comfirm_R">
             <constraints>
               <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -107,7 +107,7 @@
               <text value="Click here to comfirm Agreement"/>
             </properties>
           </component>
-          <component id="6d652" class="javax.swing.JButton" binding="paymentComfirmButton" default-binding="true">
+          <component id="6d652" class="javax.swing.JButton" binding="paid_b">
             <constraints>
               <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -125,9 +125,9 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="b0eaf" class="javax.swing.JList" binding="Product_list">
+          <component id="59668" class="javax.swing.JTable" binding="CartTable">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="50"/>
               </grid>
             </constraints>
