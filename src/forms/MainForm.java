@@ -1,5 +1,6 @@
 package forms;
 
+import Database.DBconnection;
 import Cls.RowFilterUtil;
 
 import javax.swing.*;
@@ -7,6 +8,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Vector;
 
 public class MainForm extends JDialog {
     private JButton marketButton;
@@ -29,9 +35,12 @@ public class MainForm extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        // Initialize table1 with some dummy data (you should replace this with your actual data loading logic)
+        // Initialize table1 with some dummy data
         DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"Product Name", "Details", "Price"}, 0);
         table1.setModel(tableModel);
+
+        // Load product data from the database
+        loadProductData();
 
         // Apply the row filter to the table
         RowFilterUtil.applyFilter(SearchtextField1, table1);
@@ -65,6 +74,32 @@ public class MainForm extends JDialog {
                 Account.setVisible(true);
             }
         });
+    }
+
+    // Method to load product data from the database
+    private void loadProductData() {
+        DefaultTableModel tableModel = (DefaultTableModel) table1.getModel();
+        String query = "SELECT product_name, detailed, P_price FROM product";
+
+        try (Connection conn = DBconnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+
+            // Clear existing rows in the table model
+            tableModel.setRowCount(0);
+
+            // Iterate through the ResultSet to add rows to the table model
+            while (rs.next()) {
+                Vector<Object> row = new Vector<>();
+                row.add(rs.getString("product_name"));
+                row.add(rs.getString("detailed"));
+                row.add(rs.getDouble("P_price"));
+                tableModel.addRow(row);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Method to update the table with product data
