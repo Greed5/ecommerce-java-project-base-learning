@@ -15,8 +15,8 @@ public class MainForm extends JDialog {
     private JPanel ProductPane;
     private JPanel SearchPanel;
     private JTextField SearchtextField1;
-    private JButton searchButton;
-    private JList Product_list;
+    private JLabel Blankspace_search;
+    private JTable TableModel;
 
     public MainForm(JFrame parent) {
             HeadPane.setSize(600,50);
@@ -26,15 +26,25 @@ public class MainForm extends JDialog {
             setModal(true);
             setLocationRelativeTo(parent);
             setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            
+            
+            
+            
+            
+            
+            
 
 
+        // ActionListener for the Market button
         marketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              Market mark = new Market(null);
-              mark.setVisible(true);
+                dispose();  // Close the MainForm
+                Market markets = new Market(parent);  // Pass the parent frame
+                markets.setVisible(true);  // Open the Market dialog
             }
         });
+
         cartOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,4 +63,5 @@ public class MainForm extends JDialog {
             }
         });
     }
+    
 }
