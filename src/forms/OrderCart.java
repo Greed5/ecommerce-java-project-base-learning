@@ -1,6 +1,7 @@
 package forms;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,9 +19,10 @@ public class OrderCart extends JDialog {
     private JTextField textField3;
     private JRadioButton clickHereToComfirmRadioButton;
     private JButton paymentComfirmButton;
-    private JList Product_list;
+    private JTable CartTable;
 
-    public OrderCart(JFrame parent) {
+    // Constructor with DefaultTableModel parameter
+    public OrderCart(JFrame parent, DefaultTableModel cartTableModel) {
         setContentPane(MPanel);
         setTitle("Order");
         setMinimumSize(new Dimension(1024, 768));
@@ -28,19 +30,23 @@ public class OrderCart extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
+        // Initialize CartTable with the provided model
+        CartTable.setModel(cartTableModel);
+
         marketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Market mark = new Market(null);
-                mark.setVisible(true);
+                dispose();
+                Market markets = new Market(parent);
+                markets.setVisible(true);
             }
         });
         cartOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                OrderCart orderCart = new OrderCart(null);
-                orderCart.setVisible(true);
+                Market_Backup markets = new Market_Backup(null);
+                markets.setVisible(true);
             }
         });
         accountButton.addActionListener(new ActionListener() {
@@ -49,7 +55,12 @@ public class OrderCart extends JDialog {
                 dispose();
                 account Account = new account(null);
                 Account.setVisible(true);
-            }});
+            }
+        });
+    }
 
+    // Default constructor for OrderCart
+    public OrderCart(JFrame parent) {
+        this(parent, new DefaultTableModel(new String[]{"Product Name", "Details", "Price"}, 0));
     }
 }
