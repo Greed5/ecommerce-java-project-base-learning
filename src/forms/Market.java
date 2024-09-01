@@ -5,6 +5,8 @@ import Database.DBconnection;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,7 @@ public class Market extends JDialog {
     private JButton accountButton;
     private JPanel MainPanel;
     private JTextField SearchtextField1;
+    private JButton addCartB;
 
     public Market(JFrame parent) {
         setContentPane(MainPanel);
@@ -32,16 +35,20 @@ public class Market extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         // Initialize the JTable with column names
-        String[] columnNames = {"Product Name", "Details", "Price"};
+        String[] columnNames = {"Select", "Product Name", "Details", "Price"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
         Product_Market.setModel(tableModel);
 
         // Center align the content in the JTable cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 0; i < Product_Market.getColumnCount(); i++) {
+        for (int i = 1; i < Product_Market.getColumnCount(); i++) {
             Product_Market.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+
+        // Set custom renderer and editor for the checkbox column
+        Product_Market.getColumnModel().getColumn(0).setCellRenderer(new CheckBoxRenderer());
+        Product_Market.getColumnModel().getColumn(0).setCellEditor(new CheckBoxEditor());
 
         // Fetch data from the database and populate the JTable
         loadProductData(tableModel);
@@ -58,12 +65,13 @@ public class Market extends JDialog {
         marketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();  // Close the current Market dialog
-                Market markets = new Market(parent);  // Open a new Market dialog
+                dispose();
+                Market markets = new Market(parent);
                 markets.setVisible(true);
             }
         });
 
+        // ActionListener for the Cart Order button
         cartOrderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -73,6 +81,7 @@ public class Market extends JDialog {
             }
         });
 
+        // ActionListener for the Account button
         accountButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,6 +90,39 @@ public class Market extends JDialog {
                 Account.setVisible(true);
             }
         });
+
+        // ActionListener for the Add to Cart button
+        addCartB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleAddToCart();
+            }
+        });
+    }
+
+    private void handleAddToCart() {
+        // Retrieve selected rows
+        int rowCount = Product_Market.getRowCount();
+        DefaultTableModel tableModel = (DefaultTableModel) Product_Market.getModel();
+        DefaultTableModel cartTableModel = new DefaultTableModel(new String[]{"Product Name", "Details", "Price"}, 0);
+
+        for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            Boolean isSelected = (Boolean) tableModel.getValueAt(rowIndex, 0);
+            if (isSelected) {
+                Vector<Object> row = new Vector<>();
+                row.add(tableModel.getValueAt(rowIndex, 1)); // Product Name
+                row.add(tableModel.getValueAt(rowIndex, 2)); // Details
+                row.add(tableModel.getValueAt(rowIndex, 3)); // Price
+                cartTableModel.addRow(row);
+            }
+        }
+
+        // Create and display the OrderCart dialog with the cartTableModel
+        OrderCart orderCart = new OrderCart(null, cartTableModel);
+        orderCart.setVisible(true);
+
+        // Show success message
+        JOptionPane.showMessageDialog(this, "Products have been added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void loadProductData(DefaultTableModel tableModel) {
@@ -97,6 +139,7 @@ public class Market extends JDialog {
             // Iterate through the ResultSet to add rows to the table model
             while (rs.next()) {
                 Vector<Object> row = new Vector<>();
+                row.add(false); // Checkbox default value
                 row.add(rs.getString("product_name"));
                 row.add(rs.getString("detailed"));
                 row.add(rs.getDouble("P_price"));
@@ -106,6 +149,32 @@ public class Market extends JDialog {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    private class CheckBoxRenderer extends JCheckBox implements TableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            setSelected(value != null && (Boolean) value);
+            return this;
+        }
+    }
+
+    private class CheckBoxEditor extends DefaultCellEditor {
+        public CheckBoxEditor() {
+            super(new JCheckBox());
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return ((JCheckBox) editorComponent).isSelected();
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            JCheckBox checkBox = (JCheckBox) editorComponent;
+            checkBox.setSelected(value != null && (Boolean) value);
+            return checkBox;
         }
     }
 
