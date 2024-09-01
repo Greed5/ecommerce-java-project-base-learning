@@ -1,9 +1,13 @@
 package forms;
 
+import Cls.RowFilterUtil;
+
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import forms.Market;
 
 public class MainForm extends JDialog {
     private JButton marketButton;
@@ -16,6 +20,7 @@ public class MainForm extends JDialog {
     private JPanel SearchPanel;
     private JTextField SearchtextField1;
     private JLabel Blankspace_search;
+    private JTable table1;
     private JTable TableModel;
 
     public MainForm(JFrame parent) {
@@ -26,13 +31,7 @@ public class MainForm extends JDialog {
             setModal(true);
             setLocationRelativeTo(parent);
             setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            
-            
-            
-            
-            
-            
-            
+
 
 
         // ActionListener for the Market button
@@ -63,5 +62,5 @@ public class MainForm extends JDialog {
             }
         });
     }
-    
+
 }
