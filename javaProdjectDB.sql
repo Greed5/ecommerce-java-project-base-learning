@@ -216,26 +216,29 @@ foreign key(product_id) references product(product_id)
 
 drop table payment;
 -- Payment --
-create table card(
-card_id int not null,
-primary key(card_id),
-card_naum int not null,
-cvv int not null,
-email char(255) not null
-);
-
 create table payment(
-pay_id int not null,
-primary key(pay_id),
-card_id int not null,
-foreign key(card_id) references card(card_id) ,
+payment_id  int unique not null auto_increment,
 product_id int not null,
 user_id int not null,
 foreign key(user_id) references user(user_id) ,
-foreign key(product_id) references product(product_id) 
-
+foreign key(product_id) references product(product_id),
+primary key(payment_id)
 );
 
+
+create table card
+(
+card_id  int not null auto_increment unique,
+card_n int not null unique,
+cvv int not null,
+email char(255) not null,
+primary key (card_id)
+);
+
+
+insert into card(card_id,card_n,cvv,email)
+value (1,123456788,4433,"mail.com"),
+(2,987654321, 2323, "nana.com");
 
 
 
