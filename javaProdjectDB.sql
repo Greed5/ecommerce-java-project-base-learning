@@ -179,42 +179,6 @@ INSERT INTO categories (categories_name) VALUES
 
 
 
--- payment --
-
-
-create table payment(
-payment_id int not null,
-product_id int not null,
-user_id int not null,
-foreign key(user_id) references user(user_id) ,
-foreign key(product_id) references product(product_id) ,
-primary key(payment_id)
-);
-
-
--- market --
-
-create table market(
-market_id int not null unique,
-primary key(market_id),
-add_id int not null,
-foreign key(add_id) references addproduct(add_id)
-
-);
-
-
-
--- addproduct --
-
-create table addproduct(
-add_id int not null,
-primary key(add_id),
-product_id int not null,
-foreign key(product_id) references product(product_id)
-
-);
-
-drop table payment;
 -- Payment --
 create table payment(
 payment_id  int unique not null auto_increment,
