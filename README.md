@@ -15,4 +15,8 @@ and check box as product select to add to cart
 
 account: display current user name and img 
 currently maintain
+
+
+updated: 02/09/24  
+-username label have been updated( by display current user login name)
 ![Screenshot 2024-09-01 164125](https://github.com/user-attachments/assets/be653e66-8c16-441c-84cf-eb40b8c0666a)
