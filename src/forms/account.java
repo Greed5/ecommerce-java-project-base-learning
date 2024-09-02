@@ -1,11 +1,15 @@
 package forms;
 
 import Database.DBconnection;
-
+import Cls.Authentication;
+import Cls.User;
+import forms.Login;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,13 +23,11 @@ public class account extends JDialog {
     private JButton marketButton;
     private JButton cartOrderButton;
     private JButton accountButton;
-    private JLabel usernameLabel; // JLabel to display the username
-
-    private int userId; // Variable to hold the user ID
+    private JLabel usernameLabel;
+    private int userId;
 
     // Constructor to initialize the account form with user ID
     public account(JFrame parent, int userId) {
-        this.userId = userId; // Set the user ID
         setContentPane(Mainpane);
         setTitle("Account");
         setMinimumSize(new Dimension(1024, 768));
@@ -48,9 +50,9 @@ public class account extends JDialog {
         marketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();  // Close the Account form
-                Market markets = new Market(parent);  // Pass the parent frame
-                markets.setVisible(true);  // Open the Market dialog
+                dispose(); 
+                Market markets = new Market(parent); 
+                markets.setVisible(true);  
             }
         });
 
@@ -67,49 +69,31 @@ public class account extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                account Account = new account(parent, userId); // Pass the user ID
+                account Account = new account(parent, userId); 
                 Account.setVisible(true);
             }
         });
+        usernameLabel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentShown(ComponentEvent e) {
+                User user = new User();
+                String currentUsername = user.getUsername();
+                usernameLabel.setText(currentUsername);
+            }
+        });
     }
-
     // Default constructor for Account
     public account(JFrame parent) {
-        this(parent, -1); // Default user ID or handle as needed
+        this(parent, -1); 
     }
-
     // Method to update the username label
     private void updateUsernameLabel() {
         if (userId <= 0) {
-            usernameLabel.setText("Invalid user ID");
+            User user = new User();
+            String currentUsername = user.getUsername();
+            usernameLabel.setText(currentUsername);
             return;
+
         }
-
-        String query = "SELECT username FROM User WHERE user_id = ?";
-        try (Connection conn = DBconnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, userId);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    String username = rs.getString("username");
-                    usernameLabel.setText("Username: " + username);
-                } else {
-                    usernameLabel.setText("Username not found");
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            usernameLabel.setText("Error retrieving username");
-        }
-    }
-
-    public static void main(String[] args) {
-        // Example usage (assumes currentUserID is known and passed correctly)
-        JFrame frame = new JFrame();
-        account acc = new account(frame, 1); // Pass the user ID here
-        acc.setVisible(true);
     }
 }
