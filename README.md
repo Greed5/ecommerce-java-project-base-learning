@@ -1,5 +1,15 @@
 # ecommerce-java-project-base-learning
 project base learning for my self. Learning to work on java swing with DBconnection to make a ecommerce interface with some feature
+-Login Feature
+-Registered feature
+-Authenthication
+-Search filter name
+-add to Cart
+-Data in Db to Jtable
+
+i will keep Looking around when i feel more creative and having fun with coding again i will come to adjust some updated more with new branch with more feature and better Ui.
+It was fun back then when doing it. but now i feel a bit burn out in sitting in a place more than 4h just to stare at the code!!
+
 ![Screenshot 2024-09-01 164242](https://github.com/user-attachments/assets/5cb1c8ba-7da4-4913-84a8-53fef22956c8)
 ![Screenshot 2024-09-01 164005](https://github.com/user-attachments/assets/9babd66d-a098-4cbf-a221-b418ea30175f)
 
